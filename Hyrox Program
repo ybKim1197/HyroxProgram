@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hyrox program</title>
+
+<style>
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont;background:#f4f4f4}
+header{background:#111;color:#fff;text-align:center;padding:18px;font-size:22px;font-weight:700}
+.container{display:flex;max-width:1200px;margin:auto}
+.weeks{width:72px;background:#fff;border-right:1px solid #ddd}
+.week{padding:14px;text-align:center;cursor:pointer;border-bottom:1px solid #eee}
+.week.active{background:#0078ff;color:#fff;font-weight:700}
+.content{flex:1;padding:16px}
+.day{background:#fff;border-radius:10px;padding:14px;margin-bottom:12px}
+.day-title{font-weight:700;cursor:pointer}
+.workouts{display:none;margin-top:10px}
+.workout{margin-bottom:14px}
+.workout-title{font-weight:700}
+.workout div{padding-left:10px}
+@media(max-width:600px){
+.container{flex-direction:column}
+.weeks{width:100%;display:flex;overflow-x:auto}
+.week{flex:1}
+}
+</style>
+</head>
+
+<body>
+<header>Hyrox program</header>
+
+<div class="container">
+  <div class="weeks" id="weeks"></div>
+  <div class="content" id="content">주차를 선택하세요</div>
+</div>
+
+<script>
+const program = {
+
+/* ===================== WEEK 1 ===================== */
+1:{
+day1:{title:"Day1(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"2 Rounds of:",
+"90s Rowing(Medium pace)",
+"20 Air squats",
+"10 Push ups"]},
+{name:"Workout 2)",details:[
+"3 Rounds of",
+"12 DB RDL",
+"12 DB bent-over row",
+"0.03mi DB farmer’s carry"]}
+]},
+day2:{title:"Day2(Aerobic)",workouts:[
+{name:"Workout 1)",details:[
+"10 Rounds of:",
+"1min run(jogging pace)",
+"1min Walk"]}
+]},
+day3:{title:"Day3(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"4 Rounds of:",
+"0.01mi Sled push(unweighted)",
+"400m run(jogging pace)",
+"10 DB thruster",
+"1:30 min rest"]}
+]},
+day4:{title:"Day4(Power)",workouts:[
+{name:"Workout 1)",details:[
+"2 Rounds of:",
+"10 DB goblet squats",
+"40s DB WKLG",
+"10 DB glute bridge"]},
+{name:"Workout 2)",details:[
+"3 Rounds of:",
+"10 DB seated shoulder press",
+"10 DB bent-over wide row",
+"10 WBS"]}
+]},
+day5:{title:"Day5(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"1min Walk",
+"800m Run(jogging pace)",
+"1min Walk",
+"400m Run(Jogging pace)",
+"1min Walk",
+"200m Run(jogging pace)"]},
+{name:"Workout 2)",details:[
+"1min Sled pull(weighted)",
+"8 Burpees",
+"30s Slam ball slam",
+"40s Sled pull(weighted)",
+"6 Burpees",
+"20s Slam ball slam",
+"20s Sled pull(weighted)",
+"4 Burpees",
+"10s Slam ball slam"]}
+]}
+},
+
+/* ===================== WEEK 2 ===================== */
+2:{
+day1:{title:"Day1(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"5–10–15-20 Reps",
+"DB floor press",
+"DB bent-over row",
+"WBS",
+"200m Run(Jogging pace)",
+"90s Rest",
+"Buy out:",
+"500m Ski Erg"]}
+]},
+day2:{title:"Day2(Aerobic)",workouts:[
+{name:"Workout 1)",details:[
+"4 Rounds of:",
+"3min Bike(Medium pace)",
+"3min Row(Medium pace)",
+"3min Ski Erg(Medium pace)",
+"90s Rest"]}
+]},
+day3:{title:"Day3(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"4 Rounds of:",
+"400m Run(Jogging pace)",
+"10 DB Thruster",
+"10 DB skier swings",
+"8 Burpees"]}
+]},
+day4:{title:"Day4(Power)",workouts:[
+{name:"Workout 1)",details:[
+"3 Rounds of:",
+"10 DB sumo squats",
+"40s DB lateral lunge(alt)",
+"10 DB glute bridge",
+"10s DB glute bridge hold",
+"1min Rest"]},
+{name:"Workout 2)",details:[
+"3 Rouns of:",
+"10 DB seated neutral shoulder press",
+"10 DB bent-over wide row",
+"10 Slam ball slam",
+"1min Rest"]},
+{name:"Workout 3)",details:[
+"2 Rounds of:",
+"100m DB single-arm overhead carry(left)",
+"100m DB single-arm overhead carry(right)",
+"5 Walkouts",
+"30s Rest"]}
+]}
+},
+
+/* ===================== WEEK 3 ===================== */
+3:{
+day1:{title:"Day1(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"4 Rounds of:",
+"*1min rest between rounds",
+"20/15/10/10 DB goblet squat",
+"40s/35s/30s/25s DB WKLG",
+"400mm Ski Erg"]}
+]},
+day2:{title:"Day2(Aerobic)",workouts:[
+{name:"Workout 1)",details:[
+"경사 트레드밀 이용",
+"4min Walk(incline3)",
+"8min Run(Jogging pace)",
+"4min Walk",
+"8min Run(Jogging pace, incline3)",
+"4min Walk",
+"8min Run(Jogging pace)",
+"4min Walk"]}
+]},
+day3:{title:"Day3(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"18-15-12-9-6-3 reps of:",
+"200m Run(대회 페이스)",
+"DB push press",
+"DB Front squat",
+"DB bent-over wide row"]}
+]},
+day4:{title:"Day4(Power)",workouts:[
+{name:"Workout 1)",details:[
+"3 Rounds of:",
+"10 DB back squat",
+"40s DB reverse lunge(Alt)",
+"10s DB single leg glute bridge(left)",
+"10s DB single leg glute bridge(right)"]},
+{name:"Workout 2)",details:[
+"3 Rounds of:",
+"10 DB Seated Shoulder press",
+"10 DB Bent-over wide row",
+"10 DB upright row",
+"10 WBS"]},
+{name:"Workout 3)",details:[
+"3 Rounds of:",
+"30s High plank",
+"10 Crunch",
+"30s Rest"]}
+]},
+day5:{title:"Day5(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"3 Rounds of:",
+"2min Walk",
+"1min Run(Jogging pace)",
+"20s Sprint"]},
+{name:"Workout 2)",details:[
+"3 Rounds of",
+"15m DB WKLG",
+"8 Burpee broad jump",
+"30s Ski Erg",
+"15m Bear crawl"]}
+]}
+},
+
+/* ===================== WEEK 4 ===================== */
+4:{
+day1:{title:"Day1(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"3 Rounds of:",
+"12 DB Push press",
+"50s Seld pull(weighted)",
+"15m Long jump",
+"500m Run(Jogging pace)"]}
+]},
+day2:{title:"Day2(Aerobic)",workouts:[
+{name:"Workout 1)",details:[
+"3 Rounds of:",
+"3min Walk",
+"3min Run(Jogging pace)"]}
+]},
+day3:{title:"Day3(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"4 Rounds of:",
+"3min Ski Erg(Medium pace)",
+"400m Run(Jogging pace)",
+"15m Sled Push",
+"1min Rest"]},
+{name:"Workout 2)",details:[
+"5min Ski Erg(slow pace)"]}
+]},
+day4:{title:"Day4(Power)",workouts:[
+{name:"Workout 1)",details:[
+"6-9-12 Reps of:",
+"6 KBS",
+"6 DB goblet squat",
+"6 Burpee broad jump(step-up)",
+"20s/25s/30s DB reverse lunge + knee drive (alt)"]},
+{name:"Workout 2)",details:[
+"6-9-12 Reps of:",
+"DB upright row",
+"DB Arnold press(2s Tempo up, 2s Tempo down)",
+"Burpee broad jump(step-up)",
+"20s/25s/30s DB ice skater",
+"1min Rest"]}
+]},
+day5:{title:"Day5(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"3-6-9-12-15 Reps of:",
+"KBS",
+"DB goblet squat",
+"Burpee broad jump(step-up)"]},
+{name:"Workout 2)",details:[
+"3min Walk",
+"2min Run(Jogging pace)",
+"1min Walk",
+"2min Run(Jogging pace)",
+"1min Walk",
+"5min Run(대회 페이스)"]}
+]}
+},
+/* ===================== WEEK 5 ===================== */
+5:{
+day1:{title:"Day1(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"300m/200m/100m Ski Erg(Medium pace)",
+"15/10/5 Slam ball slam",
+"30/20/10 DB goblet squat"]},
+{name:"Workout 2)",details:[
+"300m/200m/100m Rowing(Medium pace)",
+"30/20/10 WBS",
+"30/20/10 Burpee"]}
+]},
+day2:{title:"Day2(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"5 Rounds of:",
+"300m Run(대회 페이스)",
+"12 DB thruster",
+"1min bike(Fast pace)",
+"90s Rest"]}
+]},
+day3:{title:"Day3(Aerobic)",workouts:[
+{name:"Workout 1)",details:[
+"5 Rounds of:",
+"800m Rowing(Medium pace)",
+"3 Burpee"]},
+{name:"Workout 2)",details:[
+"2min Walk",
+"10min Run(Jogging pace)",
+"1min Walk"]}
+]},
+day4:{title:"Day4(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"3 Rounds of:",
+"400m Run(대회 페이스)",
+"2min rest"]},
+{name:"Workout 2)",details:[
+"3 Rounds of:",
+"30s Ski Erg(Fast pace)",
+"1min rest"]}
+]},
+day5:{title:"Day5(Complete)",workouts:[
+{name:"Workout 1)",details:[
+"4min Ski Erg(Medium pace)"]},
+{name:"Workout 2)",details:[
+"3 Rounds of:",
+"30m Sandbag WKLG",
+"15 WBS",
+"400m Run(대회페이스)",
+"1min Sled push(Weighted)",
+"90s Rest"]},
+{name:"Workout 3)",details:[
+"Buy in:",
+"4min bike(Medium pace)",
+"3 Rounds of:",
+"16m Burpee broad jump",
+"20s/15s/10s Squat hold"]}
+]}
+},
+
+/* ===================== WEEK 6 ===================== */
+6:{
+day1:{title:"Day1(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"3 Rounds of:",
+"100m KB farmer’s carry",
+"10 KBS",
+"20 KB squats",
+"1min Rest"]},
+{name:"Workout 2)",details:[
+"3 Rounds of:",
+"2min Rowing(Medium pace)",
+"10 Squat jump",
+"10 Push up"]}
+]},
+day2:{title:"Day2(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"4 Rounds of:",
+"DB reverse lunge(Alt)",
+"1min Rest",
+"30s DB OHP",
+"1min Rest",
+"30s DB bent-over row",
+"1min Rest",
+"200m Run(대회 페이스)",
+"1min Rest",
+"Buy out:",
+"150m Ski Erg(Medium pace)"]}
+]},
+day3:{title:"Day3(Aerobic)",workouts:[
+{name:"Workout 1)",details:[
+"2 Rounds of:",
+"2min Walk",
+"5min Run(Jogging pace)",
+"10min Run(대회 페이스)"]}
+]},
+day4:{title:"Day4(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"3 Rounds of:",
+"1min Sled push(Weighted)",
+"1min Rest",
+"1min Sled pull(Weighted)",
+"1min Rest",
+"1min Bench hop-overs",
+"1min Rest",
+"1min DB thruster",
+"1min Rest",
+"1min DB underhand-grip bent-over row",
+"1min Rest"]}
+]},
+day5:{title:"Day5(Partial race simulation)",workouts:[
+{name:"Workout 1)",details:[
+"각 동작 전에 대회 페이스 800m Run",
+"800m Ski Erg(Medium pace)",
+"500m Sled push(Weighted)",
+"500m Sled push(Weighted)",
+"30m Burpee broad jump",
+"800m Rowing(Medium pace)",
+"200m KB farmer’s carry",
+"50m Sandbag WKLG",
+"50 WBS"]}
+]}
+},
+
+/* ===================== WEEK 7 ===================== */
+7:{
+day1:{title:"Day1(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"4 Rounds of:",
+"30/25/20/15 KB deadlift",
+"30m Sandbag WKLG",
+"30/25/20/15 WBS",
+"100m KB farmer’s carry"]}
+]},
+day2:{title:"Day2(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"5 Rounds of:",
+"10 DB thruster",
+"6 Burpee broad jump(Step-up)",
+"2min Bike(Fast pace)",
+"3min Rest"]}
+]},
+day3:{title:"Day3(Aerobic)",workouts:[
+{name:"Workout 1)",details:[
+"1min Walk",
+"15min Run(Jogging pace)",
+"1min Walk"]},
+{name:"Workout 2)",details:[
+"1min Ski Erg(Slow pace)",
+"10min Ski Erg(Medium pace)",
+"1min Ski Erg(Slow pace)"]}
+]},
+day4:{title:"Day4(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"4 Rounds of:",
+"15 WBS",
+"12 DB push press",
+"30s Ski Erg(Fast pace)"]},
+{name:"Workout 2)",details:[
+"4 Rounds of:",
+"15m Sled push(Weighted)",
+"200m Run(대회 페이스)",
+"1min Rest"]},
+{name:"Workout 3)",details:[
+"8 KBS",
+"10 Burpee",
+"1min Rest"]},
+{name:"Workout 4)",details:[
+"3 Rounds of:",
+"200m/150m/100m Rowing(Fast pace)",
+"50m KB farmer’s carry"]}
+]}
+},
+
+/* ===================== WEEK 8 ===================== */
+8:{
+day1:{title:"Day1(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"4 Rounds of:",
+"90s Ski Erg(Medium pace)",
+"1min Sled pull(Arms only, Weigthed)",
+"12 Sled pull(Weighted)",
+"15 WBS"]}
+]},
+day2:{title:"Day2(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"8 Rounds of:",
+"15m Sled push(Weighted)",
+"100m Sprint"]}
+]},
+day3:{title:"Day3(Aerobic)",workouts:[
+{name:"Workout 1)",details:[
+"6 Rounds of:",
+"400m Run(대회 페이스)",
+"2min Rest"]}
+]},
+day4:{title:"Day4(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"5 Rounds of:",
+"20 WBS",
+"200m Sprint"]}
+]},
+day5:{title:"Day5(Complete)",workouts:[
+{name:"Workout 1)",details:[
+"3 Rounds of:",
+"1000m Run(대회 페이스)",
+"50s Sled pull(Weighted)",
+"3min Rowing(Medium pace)",
+"30m Sandbag WKLG",
+"100m KB farmer’s carry",
+"2min Rest"]},
+{name:"Workout 2)",details:[
+"2 Rounds of:",
+"10 Burpee",
+"10 KBS",
+"15m Bear crawl",
+"10 DB push press",
+"4min Rest"]}
+]}
+},
+/* ===================== WEEK 9 ===================== */
+9:{
+day1:{title:"Day1(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"각 동작 전 500m 대회 페이스 Run",
+"500m Ski Erg",
+"2min Rest",
+"30 Burpee broad jump(step-up)",
+"2min Rest",
+"200m KB farmer’s carry",
+"2min Rest",
+"50m Sandbag WKLG",
+"2min Rest",
+"75 WBS"]}
+]},
+day2:{title:"Day2(Complete)",workouts:[
+{name:"Workout 1)",details:[
+"5 Rounds of :",
+"180s/150s/120s/90s/60s Ski Erg(Medium pace)",
+"20/20/10/10/6 DB forward lunge(Alt)",
+"25/20/15/10/5 DB push press",
+"25/20/15/10/5 DB front squat",
+"1min Rest",
+"Buy out:",
+"3min Ski Erg(Medium pace)",
+"20 DB forward lunge(Alt)",
+"25 DB push press",
+"25 DB front squat"]}
+]},
+day3:{title:"Day3(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"4 Rounds of:",
+"100m Run(대회 페이스)",
+"100m Sprint",
+"90s Rest"]},
+{name:"Workout 2)",details:[
+"4 Rounds of:",
+"100m Rowing(Medium pace)",
+"100m Rowing(Fast pace)",
+"90s Rest"]}
+]},
+day4:{title:"Day4(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"6 Rounds of:",
+"1min Bike(Medium pace)",
+"15m Sled push(Weighted)",
+"200m Run(Jogging pace)"]}
+]},
+day5:{title:"Day5(Complete)",workouts:[
+{name:"Workout 1)",details:[
+"3 Rounds of:",
+"180s/120s/60s Bike(Medium pace)",
+"30/20/10 WBS",
+"30m/15m/15m DB WKLG",
+"30/20/10 DB push press",
+"800m Run(대회 페이스)",
+"2min Rest"]}
+]}
+},
+
+/* ===================== WEEK 10 ===================== */
+10:{
+day1:{title:"Day1(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"각 동작 전에 400m 대회 페이스 Run",
+"동작간 휴식 2min",
+"25 WBS",
+"30m DB WKLG",
+"25 DB back squat",
+"25 WBS",
+"30m DB WKLG",
+"25 DB back squat"]}
+]},
+day2:{title:"Day2(Complete)",workouts:[
+{name:"Workout 1)",details:[
+"4 Rounds of:",
+"1000m Run",
+"30m Sled push(Weighted)",
+"30m DB WKLG",
+"2min Rest",
+"Buy out:",
+"100m Sled pull"]}
+]},
+day3:{title:"Day3(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"6 Rounds of:",
+"400m Run(대회 페이스)",
+"2min Rest"]}
+]},
+day4:{title:"Day4(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"5 Rounds of:",
+"45s Bike(Medium pace)",
+"8 Burpee broad jump",
+"15 WBS",
+"30s Bike(Fast pace)",
+"1min Rest"]}
+]},
+day5:{title:"Day5(Full race simulation)",workouts:[
+{name:"Workout 1)",details:[
+"Open single training"]}
+]}
+},
+
+/* ===================== WEEK 11 ===================== */
+11:{
+day1:{title:"Day1(Complete)",workouts:[
+{name:"Workout 1)",details:[
+"3 Rounds of:",
+"2min Bike(Medium pace)",
+"400m Run(대회 페이스)",
+"30m Sandbag WKLG",
+"500m Ski Erg",
+"100m KB farmer’s carry",
+"2min Rest"]}
+]},
+day2:{title:"Day2(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"4 Rounds of:",
+"30m Sled push(Weighted)",
+"500m Rowing(Medium pace)",
+"20 WBS",
+"2min Rest"]}
+]},
+day3:{title:"Day3(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"4 Rounds of:",
+"800m Run(대회 페이스)",
+"2min Rest"]}
+]},
+day4:{title:"Day4(Aerobic)",workouts:[
+{name:"Workout 1)",details:[
+"6 Rounds of:",
+"1min Run(Fast pace)",
+"2min Walk"]}
+]},
+day5:{title:"Day5(Complete)",workouts:[
+{name:"Workout 1)",details:[
+"각 동작 전 800m 대회페이스 Run",
+"각 동작 후 2min Rest",
+"1000m Ski-Erg(Medium pace)",
+"45m Sled push(Weighted)",
+"80m Burpee broad jump",
+"200m KB farmer’s carry",
+"100 WBS"]}
+]}
+},
+
+/* ===================== WEEK 12 ===================== */
+12:{
+day1:{title:"Day1(Foundation)",workouts:[
+{name:"Workout 1)",details:[
+"4 Rounds of:",
+"500m Rowing(Medium pace)",
+"15m Sled pull(Weighted)",
+"15 KB deadlift",
+"100m KB farmer’s carry",
+"2min Rest"]}
+]},
+day2:{title:"Day2(Aerobic)",workouts:[
+{name:"Workout 1)",details:[
+"30s(fast)-1min(fast)-2min(medium)-3min(medium)-4mins(face) of:",
+"Ski Erg",
+"Bike",
+"Rowing"]}
+]},
+day3:{title:"Day3(Engine)",workouts:[
+{name:"Workout 1)",details:[
+"6 Rounds of:",
+"150m Run(대회 페이스)",
+"50m Run(Fast pace)",
+"6 Burpee broad jump",
+"1min Rest"]}
+]},
+day4:{title:"Day4(Aerobic)",workouts:[
+{name:"Workout 1)",details:[
+"5min Walk",
+"20min Run(Jogging pace)",
+"5min Walk"]}
+]},
+day5:{title:"Day5(Aerobic, optional)",workouts:[
+{name:"Workout 1)",details:[
+"2min Walk",
+"15min Run(Jogging pace)",
+"2min Walk"]},
+{name:"Workout 2)",details:[
+"10 Air squats",
+"10 Push ups",
+"10 Walkouts",
+"10 Sit ups"]}
+]}
+}
+
+};
+
+/* ===================== UI LOGIC ===================== */
+const weeks=document.getElementById("weeks");
+const content=document.getElementById("content");
+
+for(let i=1;i<=12;i++){
+  const w=document.createElement("div");
+  w.className="week";
+  w.innerText=i;
+  w.onclick=()=>showWeek(i,w);
+  weeks.appendChild(w);
+}
+
+function showWeek(num,el){
+  document.querySelectorAll(".week").forEach(w=>w.classList.remove("active"));
+  el.classList.add("active");
+  content.innerHTML="";
+  Object.values(program[num]||{}).forEach(day=>{
+    const d=document.createElement("div");
+    d.className="day";
+    const t=document.createElement("div");
+    t.className="day-title";
+    t.innerText=day.title;
+    const wks=document.createElement("div");
+    wks.className="workouts";
+    day.workouts.forEach(w=>{
+      const wd=document.createElement("div");
+      wd.className="workout";
+      wd.innerHTML=
+        `<div class="workout-title">${w.name}</div>` +
+        w.details.map(x=>`<div>- ${x}</div>`).join("");
+      wks.appendChild(wd);
+    });
+    t.onclick=()=>wks.style.display=wks.style.display==="block"?"none":"block";
+    d.appendChild(t);
+    d.appendChild(wks);
+    content.appendChild(d);
+  });
+}
+</script>
+</body>
+</html>
